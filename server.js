@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+// const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
@@ -9,10 +10,13 @@ const app = express();
 //opSahadat
 // middlewares
 app.use(express.json());
+// app.use(bodyParser.json());
 app.use(cors());
 
 // endpoints
-// app.use("/api/user", require("./routes/userRoutes"));
+app.use('/', require('./routes/authRoutes'))
+app.get('/', (req, res) => res.send('Hello World!'))
+
 
 // port
 const PORT = process.env.PORT || 4000;
@@ -24,9 +28,9 @@ mongoose
   .then(() => {
     // listening for requests
     app.listen(PORT, (req, res) => {
-      console.log(`connected to db && server running on port:${PORT}`);
+      console.log(`Connected to DB && server running on port: ${PORT}`);
     });
   })
   .catch((err) => {
-    console.log(err.message);
+    console.error('Database connection error:', err.message);
   });
