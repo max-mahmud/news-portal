@@ -1,28 +1,37 @@
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AiFillDashboard, AiOutlinePlus } from 'react-icons/ai'
 import { ImProfile } from 'react-icons/im'
 import { BiNews } from 'react-icons/bi'
 import { FiUsers } from 'react-icons/fi'
 import { FaPlus } from "react-icons/fa";
+import logo from "../../assets/logo.png"
+import storeContext from '../../context/storeContext'
+import { IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = () => {
 
     const { pathname } = useLocation()
+    const navigate = useNavigate()
 
-    const userInfo = {
-        role: "writer"
+    const {store, dispatch} = useContext(storeContext)
+
+    const logout = () => {
+        localStorage.removeItem("newsToken");
+        dispatch({ type: 'logout', payload: '' })
+        navigate('/login')
     }
+
     return (
         <div className='w-[250px] h-screen fixed left-0 top-0 bg-white'>
             <div className='h-[70px] flex justify-center items-center'>
                 <Link to='/'>
-                    <img className='w-[190px] h-[35px]' src="https://news-portal-mern.onrender.com/assets/logo-00ebaab6.png" alt="" />
+                    <img className='w-[190px] h-[35px]' src={logo} alt="" />
                 </Link>
             </div>
             <ul className='px-3 flex flex-col gap-y-1 font-medium'>
                 {
-                    userInfo.role === 'admin' ? <>
+                    store.userInfo?.role === 'admin' ? <>
                         <li>
                             <Link to='/dashboard/admin' className={`px-3 ${pathname === '/dashboard/admin' ? 'bg-indigo-500 text-white' : 'bg-white text-[#404040f6]'} py-2 hover:shadow-lg hover:shadow-indigo-500/20 w-full rounded-sm flex gap-x-2 justify-start items-center hover:bg-indigo-500 hover:text-white`}>
                                 <span className='text-xl'><AiFillDashboard /></span>
@@ -69,6 +78,12 @@ const Sidebar = () => {
                         <span className='text-xl'><ImProfile /></span>
                         <span>Profile</span>
                     </Link>
+                </li>
+                <li>
+                    <div onClick={logout} className={`px-3  py-2 hover:shadow-lg hover:shadow-red-500/20 w-full rounded-sm flex gap-x-2 justify-start items-center hover:bg-red-500 hover:text-white cursor-pointer`}>
+                        <span className='text-xl'><IoLogOutOutline /></span>
+                        <span>Logout</span>
+                    </div>
                 </li>
             </ul>
         </div>

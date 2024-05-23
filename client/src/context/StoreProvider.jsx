@@ -1,11 +1,12 @@
 import React, { useReducer } from "react";
 import storeReducer from "./storeReducer";
 import storeContext from "./storeContext";
+import decode_token from "../utils";
 
 const StorePovider = ({ children }) => {
   let initialState = {
-    userInfo: "",
-    token: "",
+    userInfo: decode_token(localStorage.getItem("newsToken")),
+    token: localStorage.getItem("newsToken") || "",
   };
 
   const [store, dispatch] = useReducer(storeReducer, initialState);

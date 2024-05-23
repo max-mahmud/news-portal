@@ -15,6 +15,7 @@ app.use(cors());
 
 // endpoints
 app.use('/', require('./routes/authRoutes'))
+app.use('/', require('./routes/newsRoute.js'))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 
