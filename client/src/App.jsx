@@ -12,6 +12,7 @@ import News from './dashboard/pages/News'
 import Profile from './dashboard/pages/Profile'
 import WriterIndex from './dashboard/pages/WriterIndex'
 import CreateNews from './dashboard/pages/CreateNews'
+import Edit_news from './dashboard/pages/Edit_news'
 
 function App() {
   const userInfo = {
@@ -37,6 +38,7 @@ function App() {
             <Route path='' element={<ProtectRole role='writer' />} >
               <Route path='writer' element={<WriterIndex />} />
               <Route path='news/create' element={<CreateNews />} />
+              <Route path='news/edit/:news_id' element={<Edit_news />} />
             </Route>
 
           </Route>
