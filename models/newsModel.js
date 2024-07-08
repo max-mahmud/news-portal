@@ -44,4 +44,10 @@ const newsSchema = new Schema({
     }
 }, { timestamps: true })
 
+newsSchema.index({
+    title : "text",
+    description : "text",
+    category : "text"
+}, { weights: { title: 5, description: 3, category:2 } })
+
 module.exports = model('news', newsSchema)
